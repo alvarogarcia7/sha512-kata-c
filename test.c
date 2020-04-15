@@ -284,8 +284,8 @@ static MunitTest test_suite_sha512[] = {
 
 /* Creating a test suite is pretty simple.  First, you'll need an
  * array of tests: */
-static MunitTest test_suite_tests[] = {
-        { (char*) "/sha512/no_input", sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+static MunitTest sha512_test_suite_tests[] = {
+        { (char*) "/no_input", sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
         { (char*) "/example/rand", test_rand, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
         /* To tell the test runner when the array is over, just add a NULL
          * entry at the end. */
@@ -297,7 +297,7 @@ static MunitTest test_suite_tests[] = {
  * could declare an array of them.  Of course each sub-suite can
  * contain more suites, etc. */
 /* static const MunitSuite other_suites[] = { */
-/*   { "/second", test_suite_tests, NULL, 1, MUNIT_SUITE_OPTION_NONE }, */
+/*   { "/second", sha512_test_suite_tests, NULL, 1, MUNIT_SUITE_OPTION_NONE }, */
 /*   { NULL, NULL, NULL, 0, MUNIT_SUITE_OPTION_NONE } */
 /* }; */
 
@@ -309,9 +309,9 @@ static const MunitSuite test_suite = {
          * Note that, while it doesn't really matter for the top-level
          * suite, NULL signal the end of an array of tests; you should use
          * an empty string ("") instead. */
-        (char*) "",
+        (char*) "sha512",
         /* The first parameter is the array of test suites. */
-        test_suite_tests,
+        sha512_test_suite_tests,
         /* In addition to containing test cases, suites can contain other
          * test suites.  This isn't necessary in this example, but it can be
          * a great help to projects with lots of tests by making it easier
