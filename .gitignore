@@ -2,3 +2,20 @@
 cmake-build-debug/
 a.out
 
+## CMake
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+Makefile
+cmake_install.cmake
+
+## Test related
+Testing/
+
+## Executables
+sha512
+unit_tests
+
+## Libraries
+libprod.a
+
