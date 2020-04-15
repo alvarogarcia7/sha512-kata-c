@@ -1,6 +1,30 @@
-cmake_minimum_required(VERSION 3.16)
-project(sha512 C)
+cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_C_STANDARD 99)
+# Set the project name
+project(sha512256)
 
-add_executable(sha512 main.c)
+# Add an library for the example classes
+add_library(prod
+        main.c
+        )
+
+add_executable(sha512
+        main.c
+        )
+
+
+#############################################
+# Unit tests
+
+# enable CTest testing
+enable_testing()
+
+# Add a testing executable
+add_executable(unit_tests
+        munit.c
+        test.c
+        )
+
+add_test(test_all
+        unit_tests
+        )
