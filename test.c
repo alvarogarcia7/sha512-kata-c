@@ -8,6 +8,8 @@
  * details.
  *********************************************************************/
 
+#include <stdio.h>
+#include "sha512.h"
 #include "munit.h"
 
 /* This is just to disable an MSVC warning about conditional
@@ -168,6 +170,19 @@ test_rand(const MunitParameter params[], void* user_data) {
     return MUNIT_OK;
 }
 
+static MunitResult
+sha_512_no_input(const MunitParameter params[], void *user_data) {
+    unsigned long result[] = {0, 0, 0, 0};
+    unsigned long expected[] = {0xc672b8d1ef56ed28,
+                                0xab87c3622c511406,
+                                0x9bdd3ad7b8f97374,
+                                0x98d0c01ecef0967a};
+    sha512256((char *)"", 0, result);
+
+    munit_assert_memory_equal(sizeof(result)/sizeof(expected[0]), result, expected);
+    return MUNIT_OK;
+}
+
 /* This test case shows how to accept parameters.  We'll see how to
  * specify them soon.
  *
@@ -294,6 +309,7 @@ static MunitTest test_suite_tests[] = {
         /* Usually this is written in a much more compact format; all these
          * comments kind of ruin that, though.  Here is how you'll usually
          * see entries written: */
+        { (char*) "/sha512/no_input", sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
         { (char*) "/example/rand", test_rand, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
         /* To tell the test runner when the array is over, just add a NULL
          * entry at the end. */

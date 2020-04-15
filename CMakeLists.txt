@@ -5,11 +5,15 @@ project(sha512256)
 
 # Add an library for the example classes
 add_library(prod
-        main.c
+        sha512.c
         )
+
 
 add_executable(sha512
         main.c
+        )
+target_link_libraries(sha512
+        prod
         )
 
 
@@ -23,6 +27,9 @@ enable_testing()
 add_executable(unit_tests
         munit.c
         test.c
+        )
+target_link_libraries(unit_tests
+        prod
         )
 
 add_test(test_all

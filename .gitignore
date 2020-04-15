@@ -1,10 +1,10 @@
 .idea/
-cmake-build-debug/
-a.out
+sha512256.cbp
 
 ## CMake
 CMakeCache.txt
 CMakeFiles/
+cmake-build-debug/
 CTestTestfile.cmake
 Makefile
 cmake_install.cmake
@@ -15,6 +15,7 @@ Testing/
 ## Executables
 sha512
 unit_tests
+a.out
 
 ## Libraries
 libprod.a
