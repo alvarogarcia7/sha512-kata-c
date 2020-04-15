@@ -277,38 +277,14 @@ static MunitParameterEnum test_params[] = {
 
 /* Creating a test suite is pretty simple.  First, you'll need an
  * array of tests: */
+static MunitTest test_suite_sha512[] = {
+        { (char*) "/sha512/no_input", sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+        { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
+};
+
+/* Creating a test suite is pretty simple.  First, you'll need an
+ * array of tests: */
 static MunitTest test_suite_tests[] = {
-        {
-                /* The name is just a unique human-readable way to identify the
-                 * test. You can use it to run a specific test if you want, but
-                 * usually it's mostly decorative. */
-                (char*) "/example/compare",
-                /* You probably won't be surprised to learn that the tests are
-                 * functions. */
-                                         test_compare,
-                /* If you want, you can supply a function to set up a fixture.  If
-                 * you supply NULL, the user_data parameter from munit_suite_main
-                 * will be used directly.  If, however, you provide a callback
-                 * here the user_data parameter will be passed to this callback,
-                 * and the return value from this callback will be passed to the
-                 * test function.
-                 *
-                 * For our example we don't really need a fixture, but lets
-                 * provide one anyways. */
-                test_compare_setup,
-                /* If you passed a callback for the fixture setup function, you
-                 * may want to pass a corresponding callback here to reverse the
-                 * operation. */
-                test_compare_tear_down,
-                /* Finally, there is a bitmask for options you can pass here.  You
-                 * can provide either MUNIT_TEST_OPTION_NONE or 0 here to use the
-                 * defaults. */
-                                                                      MUNIT_TEST_OPTION_NONE,
-                                                                                  NULL
-        },
-        /* Usually this is written in a much more compact format; all these
-         * comments kind of ruin that, though.  Here is how you'll usually
-         * see entries written: */
         { (char*) "/sha512/no_input", sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
         { (char*) "/example/rand", test_rand, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
         /* To tell the test runner when the array is over, just add a NULL
