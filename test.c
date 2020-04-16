@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "sha512.h"
 #include "munit.h"
+#include "test_binary_operations.c"
 
 /* This is just to disable an MSVC warning about conditional
  * expressions being constant, which you shouldn't have to do for your
@@ -285,22 +286,30 @@ static MunitTest test_suite_sha512[] = {
 /* Creating a test suite is pretty simple.  First, you'll need an
  * array of tests: */
 static MunitTest sha512_test_suite_tests[] = {
-        { (char*) "/no_input", sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
-        { (char*) "/example/rand", test_rand, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+        { (char*) "no_input",           sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+        { (char*) "example/rand",       test_rand,        NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
         /* To tell the test runner when the array is over, just add a NULL
          * entry at the end. */
-        { (char*) "/example/parameters", test_parameters, NULL, NULL, MUNIT_TEST_OPTION_NONE, test_params },
+        { (char*) "example/parameters", test_parameters,  NULL, NULL, MUNIT_TEST_OPTION_NONE, test_params },
         { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
 };
 
-/* If you wanted to have your test suite run other test suites you
- * could declare an array of them.  Of course each sub-suite can
- * contain more suites, etc. */
-/* static const MunitSuite other_suites[] = { */
-/*   { "/second", sha512_test_suite_tests, NULL, 1, MUNIT_SUITE_OPTION_NONE }, */
-/*   { NULL, NULL, NULL, 0, MUNIT_SUITE_OPTION_NONE } */
-/* }; */
+static MunitTest empty[] = {
+        {NULL, NULL,                                       NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
+};
 
+static MunitTest mytests[] = {
+        {"set a bit", set_a_bit,                                       NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {NULL, NULL,                                       NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
+};
+
+static MunitSuite other_suites[] = {
+        {(char *) "sha512/", sha512_test_suite_tests, NULL, 1, MUNIT_SUITE_OPTION_NONE},
+        {(char *) "binary operations/", mytests, NULL, 1, MUNIT_SUITE_OPTION_NONE},
+        {NULL, NULL,                         NULL, 0, MUNIT_SUITE_OPTION_NONE}
+};
+
+MunitSuite *p = &other_suites[0];
 /* Now we'll actually declare the test suite.  You could do this in
  * the main function, or on the heap, or whatever you want. */
 static const MunitSuite test_suite = {
@@ -309,15 +318,15 @@ static const MunitSuite test_suite = {
          * Note that, while it doesn't really matter for the top-level
          * suite, NULL signal the end of an array of tests; you should use
          * an empty string ("") instead. */
-        (char*) "sha512",
+        (char *) "",
         /* The first parameter is the array of test suites. */
-        sha512_test_suite_tests,
+        empty,
         /* In addition to containing test cases, suites can contain other
          * test suites.  This isn't necessary in this example, but it can be
          * a great help to projects with lots of tests by making it easier
          * to spread the tests across many files.  This is where you would
          * put "other_suites" (which is commented out above). */
-        NULL,
+        other_suites,
         /* An interesting feature of µnit is that it supports automatically
          * running multiple iterations of the tests.  This is usually only
          * interesting if you make use of the PRNG to randomize your tests
