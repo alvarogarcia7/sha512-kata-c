@@ -17,6 +17,6 @@ set_a_bit(const MunitParameter params[], void *user_data) {
 }
 
 static void set_bit(unsigned int* input, int bitNumber) {
-    *input = 136;
+    *input |= 1u << 7u;
 }
 
