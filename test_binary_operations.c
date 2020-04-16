@@ -16,6 +16,18 @@ set_a_bit(const MunitParameter params[], void *user_data) {
     return MUNIT_OK;
 }
 
+static MunitResult
+set_multiple_bits(const MunitParameter params[], void *user_data) {
+    unsigned int input = 8; // binary: 1000
+    unsigned int expected = 648; // binary: 10_1000_1000
+
+    set_bit(&input, 8u);
+    set_bit(&input, 10u);
+
+    munit_assert_ulong (input, ==, expected);
+    return MUNIT_OK;
+}
+
 static void set_bit(unsigned int* input, unsigned int bitNumber) {
     *input |= 1u << (bitNumber-1);
 }

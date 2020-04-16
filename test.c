@@ -302,6 +302,7 @@ static MunitTest empty[] = {
 
 static MunitTest mytests[] = {
         {"set a bit", set_a_bit,                                       NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"set multiple bits", set_multiple_bits,                                       NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {NULL, NULL,                                       NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
 };
 
