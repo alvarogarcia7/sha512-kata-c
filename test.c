@@ -287,10 +287,12 @@ static MunitTest test_suite_sha512[] = {
  * array of tests: */
 static MunitTest sha512_test_suite_tests[] = {
         { (char*) "no_input",           sha_512_no_input, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
-        { (char*) "example/rand",       test_rand,        NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
-        /* To tell the test runner when the array is over, just add a NULL
-         * entry at the end. */
-        { (char*) "example/parameters", test_parameters,  NULL, NULL, MUNIT_TEST_OPTION_NONE, test_params },
+        { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
+};
+
+static MunitTest example_test_suite[] = {
+        { (char*) "rand",       test_rand,        NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+        { (char*) "parameters", test_parameters,  NULL, NULL, MUNIT_TEST_OPTION_NONE, test_params },
         { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
 };
 
@@ -304,6 +306,7 @@ static MunitTest mytests[] = {
 };
 
 static MunitSuite other_suites[] = {
+        {(char *) "example/", example_test_suite, NULL, 1, MUNIT_SUITE_OPTION_NONE},
         {(char *) "sha512/", sha512_test_suite_tests, NULL, 1, MUNIT_SUITE_OPTION_NONE},
         {(char *) "binary operations/", mytests, NULL, 1, MUNIT_SUITE_OPTION_NONE},
         {NULL, NULL,                         NULL, 0, MUNIT_SUITE_OPTION_NONE}
