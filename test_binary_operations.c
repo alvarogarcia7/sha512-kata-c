@@ -41,6 +41,18 @@ toggle_a_bit(const MunitParameter params[], void *user_data) {
     return MUNIT_OK;
 }
 
+static MunitResult
+reset_a_bit(const MunitParameter params[], void *user_data) {
+    unsigned int input = 0;
+    unsigned int expected = input;
+
+    toggle_bit(&input, 4u);
+    toggle_bit(&input, 4u);
+
+    munit_assert_ulong (input, ==, expected);
+    return MUNIT_OK;
+}
+
 static void toggle_bit(unsigned int *input, unsigned int bitNumber) {
     *input ^= 1u << (bitNumber-1);
 }
